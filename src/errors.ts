@@ -1,6 +1,7 @@
 import type { LineCounter } from './parse/line-counter.ts'
 
 export type ErrorCode =
+  | 'ALIAS_CYCLE'
   | 'ALIAS_PROPS'
   | 'BAD_ALIAS'
   | 'BAD_DIRECTIVE'

@@ -24,6 +24,7 @@ Used by: `parse()`, `parseDocument()`, `parseAllDocuments()`, `new Composer()`, 
 
 | Name             | Type          | Default | Description                                                                                                                              |
 | ---------------- | ------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| detectAliasCycles | `boolean`    | `false` | Report an `ALIAS_CYCLE` error for each alias that resolves to one of its own ancestors, i.e. that closes a cycle in the document graph. When disabled, the parsed document is identical to the un-checked one. |
 | intAsBigInt      | `boolean`     | `false` | Whether integers should be parsed into [BigInt] rather than `number` values.                                                             |
 | keepSourceTokens | `boolean`     | `false` | Include a `srcToken` value on each parsed `Node`, containing the [CST token](#working-with-cst-tokens) that was composed into this node. |
 | lineCounter      | `LineCounter` |         | If set, newlines will be tracked, to allow for `lineCounter.linePos(offset)` to provide the `{ line, col }` positions within the input.  |

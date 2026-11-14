@@ -9,6 +9,20 @@ import type { CollectionTag, ScalarTag } from './schema/types.ts'
 
 export type ParseOptions = {
   /**
+   * Detect aliases that resolve to a node containing the alias itself, i.e.
+   * aliases that close a cycle in the document graph.
+   *
+   * Such documents are valid YAML, and are fully supported by the node
+   * representation, but their plain-JS representation is cyclic and so
+   * cannot be serialised as JSON or YAML without an explicit alias node.
+   * When enabled, each such alias is reported as an `ALIAS_CYCLE` error
+   * during parsing; by default no check is made.
+   *
+   * Default: `false`
+   */
+  detectAliasCycles?: boolean
+
+  /**
    * Whether integers should be parsed into BigInt rather than number values.
    *
    * Default: `false`

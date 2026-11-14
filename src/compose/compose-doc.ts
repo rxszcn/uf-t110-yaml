@@ -14,6 +14,7 @@ import {
 import type { ComposeErrorHandler } from './composer.ts'
 import { resolveEnd } from './resolve-end.ts'
 import { resolveProps } from './resolve-props.ts'
+import { checkAliasCycles } from './util-alias-cycle.ts'
 
 export function composeDoc<Value extends DocValue = DocValue>(
   options: ParseOptions & DocumentOptions & SchemaOptions,
@@ -54,6 +55,10 @@ export function composeDoc<Value extends DocValue = DocValue>(
   doc.value = value
     ? (composeNode(ctx, value, props, onError) as Value)
     : (composeEmptyNode(ctx, props.end, start, null, props, onError) as Value)
+
+  // Aliases are leaves in the node tree, so cycles can only be recognised
+  // once the whole document value is available.
+  if (doc.options.detectAliasCycles) checkAliasCycles(doc.value, onError)
 
   const contentEnd = doc.value.range![2]
   const re = resolveEnd(end, contentEnd, false, onError)

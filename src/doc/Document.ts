@@ -108,6 +108,7 @@ export class Document<Value extends DocValue = DocValue> {
 
     const opt = Object.assign(
       {
+        detectAliasCycles: false,
         intAsBigInt: false,
         keepSourceTokens: false,
         logLevel: 'warn',

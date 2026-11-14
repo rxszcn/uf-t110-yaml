@@ -20,10 +20,14 @@ They are included in the `doc.warnings` array.
 In rare cases, the library may produce a more generic error.
 In particular, `TypeError` may occur when parsing invalid input using the `json` schema, and `ReferenceError` when the `maxAliasCount` limit is enountered.
 
+An alias whose anchor is not defined before the alias node is not a parse error: the document is composed as-is, and resolving or stringifying it throws `ReferenceError: Unresolved alias (the anchor must be set before the alias): <name>`.
+Set the `verifyAliasOrder` stringify option to `false` to skip the corresponding check in `toString()`.
+
 To identify errors for special handling, you should primarily use `code` to differentiate them from each other.
 
 | Code                     | Description                                                                                                                                                                  |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ALIAS_CYCLE`            | An alias resolves to a node that contains the alias itself, so the document graph has a cycle. Such documents are valid YAML, and are only reported with the `detectAliasCycles` option. |
 | `ALIAS_PROPS`            | Unlike scalars and collections, alias nodes cannot have an anchor or tag associated with it.                                                                                 |
 | `BAD_ALIAS`              | An alias identifier must be a non-empty sequence of valid characters.                                                                                                        |
 | `BAD_COLLECTION_TYPE`    | Explicit collection tag used on a collection type it does not support.                                                                                                       |
